@@ -1,7 +1,7 @@
 #ifndef OBSERVATEUR_H
 #define OBSERVATEUR_H
 
-#include "event.h"
+#include "event.hpp"
 
 template<typename Object>
 class Observateur{

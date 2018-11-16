@@ -2,7 +2,7 @@
 #define ECRANMENUPRINCIPAL_H
 
 #include <string>
-#include "observateur.h"
+#include "observateur.hpp"
 
 class EcranMenuPrincipal : public Observateur
 {

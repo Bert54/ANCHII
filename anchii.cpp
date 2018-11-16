@@ -1,17 +1,21 @@
-#include "anchii.h"
-#include "ui_anchii.h"
+#include "anchii.hpp"
+//#include "ui_anchii.hpp"
 
 //TODO : retirer ce commentaire pour le rendu
 //Implémentation du patern observer/observable volé à https://www.supinfo.com/articles/single/941-design-pattern-observer-c
 
-Anchii Anchii(QWidget *parent) :
+/*Anchii(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Anchii)
 {
     ui->setupUi(this);
+}*/
+
+Anchii(QWidget *parent) {
+    ui=parent;
 }
 
-Anchii ~Anchii()
+~Anchii()
 {
     delete ui;
 }
@@ -24,7 +28,7 @@ void ajouterPaquet(std::string nom){
 
 }
 
-void ajouterCarte(std::string question, std::string reponse, List<std::string> medias){
+void ajouterCarte(std::string question, std::string reponse, std::list<std::string> medias){
 
 }
 
@@ -32,7 +36,7 @@ void supprimerPaquet(){
 
 }
 
-void supprimerCartes(List<std::string> question){
+void supprimerCartes(std::list<std::string> questions){
 
 }
 

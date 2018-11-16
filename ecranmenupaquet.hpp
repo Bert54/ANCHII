@@ -2,7 +2,7 @@
 #define ECRANMENUPAQUET_H
 
 #include <string>
-#include "observateur.h"
+#include "observateur.hpp"
 
 class EcranMenuPaquet : public Observateur
 {

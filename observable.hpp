@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <iterator>
 
-#include "observateur.h"
-#include "event.h"
+#include "observateur.hpp"
+#include "event.hpp"
 
 template<typename Object>
 class Observable{
@@ -28,9 +28,9 @@ protected :
 
     void notify(){
         ItListObs beginList = this->_listObservateur.begin();
-        ConstItList endList = this->_listObservateur.end();
+        ConstItListObs endList = this->_listObservateur.end();
 
-        for (ItList it = beginList; it != endList; it++){
+        for (ListObs it = beginList; it != endList; it++){  //ou ItListObs
             (*it)->refresh(this->getEvent()());
         }
     }
@@ -40,6 +40,6 @@ private :
     typedef typename ListObs::iterator ItListObs;
     typedef typename ListObs::const_iterator ConstItListObs;
     ListObs _listObservateur;
-}
+};
 
 #endif // OBSERVABLE_H

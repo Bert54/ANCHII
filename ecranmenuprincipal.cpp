@@ -1,4 +1,4 @@
-#include "ecranmenuprincipal.h"
+#include "ecranmenuprincipal.hpp"
 
 EcranMenuPrincipal EcranMenuPrincipal(Anchii, anchii){
 

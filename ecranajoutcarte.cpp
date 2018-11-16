@@ -1,4 +1,4 @@
-#include "ecranajoutcarte.h"
+#include "ecranajoutcarte.hpp"
 
 EcranAjoutCarte::EcranAjoutCarte(Anchii anchii){
 

@@ -19,13 +19,13 @@ SOURCES += main.cpp\
     paquet.cpp \
     ecranajoutcarte.cpp
 
-HEADERS  += anchii.h \
-    ecranmenuprincipal.h \
-    ecranmenupaquet.h \
-    observateur.h \
-    event.h \
-    observable.h \
-    paquet.h \
-    ecranajoutcarte.h
+HEADERS  += \
+    anchii.hpp \
+    ecranmenupaquet.hpp \
+    ecranmenuprincipal.hpp \
+    event.hpp \
+    observable.hpp \
+    observateur.hpp \
+    paquet.hpp
 
 FORMS    += anchii.ui
