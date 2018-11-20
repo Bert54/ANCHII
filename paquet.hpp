@@ -1,10 +1,18 @@
-#ifndef PAQUET_H
-#define PAQUET_H
+#ifndef PAQUET_HPP
+#define PAQUET_HPP
 
-class Paquet
-{
+#include <iostream>
+
+class Paquet {
 public:
-    Paquet();
+
+    explicit Paquet(std::string nom);
+    std::string getNomPaquet();
+
+private:
+
+    std::string nom;
+
 };
 
 #endif // PAQUET_H

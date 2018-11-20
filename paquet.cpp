@@ -1,9 +1,9 @@
 #include "paquet.hpp"
 
-#include <string>
+Paquet::Paquet(std::string nom) {
+    this->nom = nom;
+}
 
-class Paquet
-{
-private :
-    std::string nomPaquetActif;
+std::string Paquet::getNomPaquet() {
+    return this->nom;
 }

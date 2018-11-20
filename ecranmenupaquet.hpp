@@ -1,20 +1,19 @@
-#ifndef ECRANMENUPAQUET_H
-#define ECRANMENUPAQUET_H
+#ifndef ECRANMENUPAQUETVUE_HPP
+#define ECRANMENUPAQUETVUE_HPP
 
-#include <string>
-#include "observateur.hpp"
+#include <QGridLayout>
 
-class EcranMenuPaquet : public Observateur
-{
+#include "observer.hpp"
+#include "anchii.hpp"
+#include "ecranpaquetscontroles.hpp"
+
+class EcranMenuPaquet : public Observer {
 public :
-    EcranMenuPaquet EcranMenuPaquet(Anchii _anchii);
-    EcranMenuPaquet ~EcranMenuPaquet();
-    void supprimerCarte(); //A peut etre besoin d'un parametre pour savoir quel paquet supprimer
-    void supprimerPaquet();
-
-    void::refresh(Event<std::string>* e);
+    explicit EcranMenuPaquet(Anchii *anchii, EcranPaquetsControles* ecranPaquetsListener);
+    void update();
 private :
-    Anchii _anchii;
+    Anchii *anchii;
+    EcranPaquetsControles *ecranPaquetsListener;
 };
 
-#endif // ECRANMENUPAQUET_H
+#endif // ECRANMENUPAQUETVUE_HPP

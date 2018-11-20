@@ -1,37 +1,52 @@
-#ifndef ANCHII_H
-#define ANCHII_H
+#ifndef ANCHII_HPP
+#define ANCHII_HPP
 
 #include <QMainWindow>
-#include <string>
-#include <ctime>
-#include <sstream>
-#include <list>
+#include <QStackedWidget>
+#include <paquet.hpp>
 
+#include "ecrangestionpaquetcontroles.hpp"
+#include "ecranpaquetscontroles.hpp"
 #include "observable.hpp"
+#include "deckscreen.hpp"
+#include "mainscreen.hpp"
 
 namespace Ui {
+class Anchii;
+}
 
-class Anchii : public QMainWindow, Observable<std::string>
+class EcranMenuPaquet;
+
+class Anchii : public QMainWindow, public Observable
 {
     Q_OBJECT
-public:
-    explicit Anchii(QWidget *parent);
-    Anchii();
-    ~Anchii();
-    std::string verifNomPaquet(std::string nom);
-    void ajouterPaquet(std::string nom);
-    void ajouterCarte(std::string question, std::string reponse, std::list<std::string> medias);
-    void supprimerPaquet(); //A peut etre besoin d'un parametre pour savoir quel paquet supprimer
-    void supprimerCartes(std::list<std::string> questions);
-    void setPaquetActif(std::string nomPaquet);
-    std::string getPaquetActif();
 
-protected :
-    Event<std::string>* getEvent();
+public:
+    explicit Anchii(QWidget *parent = nullptr);
+    ~Anchii();
+    void ajouterPaquet(std::string nom);
+    std::string getPaquetActif();
+    std::string verifNomPaquet(std::string nom);
+    void setPaquetActif(std::string nomPaquet);
+    std::vector<Paquet> getPaquets();
+    Ui::DeckScreen* getMenuDecksUi();
+    Ui::MainScreen* getMainScreenUi();
+    void setScreen(int s);
 
 private:
     Ui::Anchii *ui;
-    std::string nomPaquetActif;
+    std::string nomPaquetActif; // Nom du paquet actif
+    std::vector<Paquet> paquets; // La liste des paquets
+
+    QStackedWidget *screens;
+
+    EcranPaquetsControles *ecranPaquetsListener;
+    EcranGestionPaquetControles *ecranGestionPaquetListener;
+
+    EcranMenuPaquet *ecranMenuPaquetVue;
+
+    DeckScreen *deckScreen;
+    MainScreen *mainScreen;
 };
-}
-#endif // ANCHII_H
+
+#endif // ANCHII_HPP

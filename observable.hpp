@@ -1,45 +1,21 @@
-#ifndef OBSERVABLE_H
-#define OBSERVABLE_H
+#ifndef OBSERVABLE_HPP
+#define OBSERVABLE_HPP
 
-#include <list>
-#include <algorithm>
-#include <iterator>
+#include <iostream>
+#include <vector>
+#include "observer.hpp"
 
-#include "observateur.hpp"
-#include "event.hpp"
 
-template<typename Object>
-class Observable{
-public :
-    void addObservateur(Observateur<Object>* obs){
-        this->_listObservateur.push_back(obs);
-    }
+class Observable {
+public:
 
-    void removeObservateur(Observateur<Object>* obs){
-        ItListObs beginList = this->_listObservateur.begin();
-        ItListObs endList = this->_listObservateur.end();
+    void addObserver(Observer *obs);
+    void updateObservers();
 
-        ItListObs it  = std::find(beginList, endList, obs);
-        if (it != endList)
-            this->_listObservateur.erase(it);
-    }
-protected :
-    virtual Event<Object>* getEvent() = 0;
+protected:
 
-    void notify(){
-        ItListObs beginList = this->_listObservateur.begin();
-        ConstItListObs endList = this->_listObservateur.end();
+    std::vector<Observer*> observers;
 
-        for (ListObs it = beginList; it != endList; it++){  //ou ItListObs
-            (*it)->refresh(this->getEvent()());
-        }
-    }
-private :
-    typedef Observateur<Object>* PrtObs;
-    typedef std::list<PrtObs> ListObs;
-    typedef typename ListObs::iterator ItListObs;
-    typedef typename ListObs::const_iterator ConstItListObs;
-    ListObs _listObservateur;
 };
 
-#endif // OBSERVABLE_H
+#endif // OBSERVABLE_HPP
