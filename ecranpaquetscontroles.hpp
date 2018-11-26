@@ -6,6 +6,9 @@
 
 class Anchii;
 
+/**
+ * @brief The EcranPaquetsControles class Hérite de QObject pour qu'il puisse connecter ses boutons à des méthodes appartenant à lui-même
+ */
 class EcranPaquetsControles : public QObject{
     Q_OBJECT
 public:
@@ -15,7 +18,13 @@ public:
     void setScreenManageDeck();
 
 private:
+    /**
+     * @brief anchii Le modèle de l'application
+     */
     Anchii *anchii;
+    /**
+     * @brief buttonNewDeck Le bouton de création d"un nouveau paquet
+     */
     QPushButton *buttonNewDeck;
 };
 

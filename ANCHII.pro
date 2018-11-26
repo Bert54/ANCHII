@@ -30,7 +30,7 @@ SOURCES += \
         paquet.cpp \
         ecranpaquetscontroles.cpp \
     observable.cpp \
-    ecranMenuPaquet.cpp \
+    ecranmenupaquet.cpp \
     deckscreen.cpp \
     mainscreen.cpp \
     ecrangestionpaquetcontroles.cpp
@@ -41,7 +41,7 @@ HEADERS += \
         ecranpaquetscontroles.hpp \
     observer.hpp \
     observable.hpp \
-    ecranMenuPaquet.hpp \
+    ecranmenupaquet.hpp \
     ../screenDecks.hpp \
     deckscreen.hpp \
     mainscreen.hpp \

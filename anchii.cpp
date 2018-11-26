@@ -1,10 +1,13 @@
+/** Cette classe est le modèle de l'application. Elle contient en cons"quent toutes les données utiles.
+ **/
+
+
 #include "anchii.hpp"
 #include "ui_anchii.h"
 #include "ecranmenupaquet.hpp"
 
 #include <ui_mainscreen.h>
 #include <ui_deckscreen.h>
-#include <QTextStream>
 #include <QString>
 #include <QLabel>
 #include <QFrame>
@@ -16,31 +19,32 @@
  */
 Anchii::Anchii(QWidget *parent) : QMainWindow(parent), ui(new Ui::Anchii) {
     ui->setupUi(this);
+    // Ces 2 boutons sont des boutons qui seront constamment présents dans leur écrans respectifs
     QPushButton* newDeckButton = new QPushButton();
     QPushButton* buttonReturn1 = new QPushButton();
-    this->deckScreen = new DeckScreen();
-    this->mainScreen = new MainScreen();
-    this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton);
-    this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, buttonReturn1);
-    this->ecranMenuPaquetVue = new EcranMenuPaquet(this, this->ecranPaquetsListener);
-    this->mainScreen->ui->gridLayoutControls->addWidget(newDeckButton, 0, 0);
-    this->deckScreen->ui->gridLayoutControls->addWidget(buttonReturn1, 0, 0);
-    this->screens = new QStackedWidget(this);
-    this->screens->addWidget(this->mainScreen);
+    this->deckScreen = new DeckScreen(); // L'écran de gestion de deck
+    this->mainScreen = new MainScreen(); // L'écran des decks
+    this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton); // Listener de l'écran des paquets
+    this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, buttonReturn1); // Listener de l'écran de gestion de paquet
+    this->ecranMenuPaquetVue = new EcranMenuPaquet(this, this->ecranPaquetsListener); // La vue de l'écran des paquets
+    this->screens = new QStackedWidget(this); // Ce QStackedWidget va servir à la gestion multi-écran de l'application
+    this->screens->addWidget(this->mainScreen); // Ajout de l'écran des paquets
     this->screens->addWidget(this->deckScreen);
     setCentralWidget(this->screens);
     this->setScreen(0);
 }
 
 /**
- * @brief Anchii::~Anchii Destructeur de l'aaplication
+ * @brief Anchii::~Anchii Destructeur de l'application
  */
 Anchii::~Anchii()
 {
+    delete ecranPaquetsListener;
+    delete ecranGestionPaquetListener;
     delete ui;
     delete deckScreen;
-    //delete ecranMenuPaquetVue;
-    delete ecranPaquetsListener;
+    delete mainScreen;
+    delete screens;
 }
 
 /**

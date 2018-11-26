@@ -11,6 +11,9 @@ public:
 
 private:
 
+    /**
+     * @brief nom Le nom de ce paquet
+     */
     std::string nom;
 
 };

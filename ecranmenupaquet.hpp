@@ -10,8 +10,12 @@
 class EcranMenuPaquet : public Observer {
 public :
     explicit EcranMenuPaquet(Anchii *anchii, EcranPaquetsControles* ecranPaquetsListener);
+    virtual ~EcranMenuPaquet() {}
     void update();
 private :
+    /**
+     * @brief anchii Le modèle de l'application
+     */
     Anchii *anchii;
     EcranPaquetsControles *ecranPaquetsListener;
 };
