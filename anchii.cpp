@@ -21,11 +21,12 @@ Anchii::Anchii(QWidget *parent) : QMainWindow(parent), ui(new Ui::Anchii) {
     ui->setupUi(this);
     // Ces 2 boutons sont des boutons qui seront constamment présents dans leur écrans respectifs
     QPushButton* newDeckButton = new QPushButton();
+    QPushButton* newCardButton = new QPushButton();
     QPushButton* buttonReturn1 = new QPushButton();
     this->deckScreen = new DeckScreen(); // L'écran de gestion de deck
     this->mainScreen = new MainScreen(); // L'écran des decks
     this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton); // Listener de l'écran des paquets
-    this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, buttonReturn1); // Listener de l'écran de gestion de paquet
+    this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, newCardButton, buttonReturn1); // Listener de l'écran de gestion de paquet
     this->ecranMenuPaquetVue = new EcranMenuPaquet(this, this->ecranPaquetsListener); // La vue de l'écran des paquets
     this->screens = new QStackedWidget(this); // Ce QStackedWidget va servir à la gestion multi-écran de l'application
     this->screens->addWidget(this->mainScreen); // Ajout de l'écran des paquets

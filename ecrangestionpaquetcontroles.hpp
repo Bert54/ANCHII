@@ -12,15 +12,17 @@ class Anchii;
 class EcranGestionPaquetControles : public QObject {
     Q_OBJECT
 public:
-    explicit EcranGestionPaquetControles(Anchii *anchii, QPushButton *buttonReturn);
+    explicit EcranGestionPaquetControles(Anchii *anchii, QPushButton *buttonNewCard, QPushButton *buttonReturn);
     virtual ~EcranGestionPaquetControles() {}
     void returnToMainScreen();
+    void ajouterCarte();
 
 private:
     /**
      * @brief anchii Modèle de l'application
      */
     Anchii *anchii;
+    QPushButton *buttonNewCard;
     QPushButton *buttonReturn;
 };
 

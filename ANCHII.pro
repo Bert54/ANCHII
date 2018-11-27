@@ -33,7 +33,8 @@ SOURCES += \
     ecranmenupaquet.cpp \
     deckscreen.cpp \
     mainscreen.cpp \
-    ecrangestionpaquetcontroles.cpp
+    ecrangestionpaquetcontroles.cpp \
+    carte.cpp
 
 HEADERS += \
         anchii.hpp \
@@ -45,7 +46,8 @@ HEADERS += \
     ../screenDecks.hpp \
     deckscreen.hpp \
     mainscreen.hpp \
-    ecrangestionpaquetcontroles.hpp
+    ecrangestionpaquetcontroles.hpp \
+    carte.hpp
 
 FORMS += \
         anchii.ui \
