@@ -70,9 +70,23 @@ void Anchii::setPaquetActif(std::string nomPaquet) {
 
 /**
  * @brief Anchii::getPaquetActif Récupère le paquet actif de l'application
+ * @return Le paquet actif ou le premier paquet si pas de résultat.
+ */
+Paquet Anchii::getPaquetActif() {
+    std::string nPaquetActif = this->getNomPaquetActif();
+    for (Paquet paquet : this->getPaquets()) {
+        if(paquet.getNomPaquet().compare(nPaquetActif) == 0){
+            return paquet;
+        }
+    }
+    return this->getPaquets().at(0);
+}
+
+/**
+ * @brief Anchii::getNomPaquetActif Récupère le nom du paquet actif de l'application
  * @return Le nom du paquet actif
  */
-std::string Anchii::getPaquetActif() {
+std::string Anchii::getNomPaquetActif() {
     return this->nomPaquetActif;
 }
 

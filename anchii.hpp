@@ -28,7 +28,8 @@ public:
     explicit Anchii(QWidget *parent = nullptr);
     ~Anchii();
     void ajouterPaquet(std::string nom);
-    std::string getPaquetActif();
+    Paquet getPaquetActif();
+    std::string getNomPaquetActif();
     std::string verifNomPaquet(std::string nom);
     void setPaquetActif(std::string nomPaquet);
     std::vector<Paquet> getPaquets();
@@ -41,6 +42,7 @@ private:
      * @brief ui L'écran principal qui va afficher
      */
     Ui::Anchii *ui;
+
     /**
      * @brief nomPaquetActif Nom du paquet actif
      */

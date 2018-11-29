@@ -50,13 +50,7 @@ void EcranGestionPaquetControles::ajouterCarte() {
             reponse = QInputDialog::getText(0, tr("Nouvelle Carte"), tr("Entrez la reponse de la nouvelle carte :"), QLineEdit::Normal, "", &isOkPressed);
         } while (strcmp(reponse.toUtf8().constData(), "") == 0 && isOkPressed);
             if (isOkPressed) {
-            //this->anchii->getPaquetActif()
-            for (Paquet paquet : this->anchii->getPaquets()) { //Peu efficace mais je ne saitp as si c'est ok de modifier les fonctions de paquet actif pour retourner directement un paquet au lieu d'un string
-                if(strcmp(paquet.getNomPaquet().c_str(), this->anchii->getPaquetActif().c_str()) == 0){
-                    paquet.ajouterCarte(question.toUtf8().constData(), reponse.toUtf8().constData());
-                    break;
-                }
-            }
+            this->anchii->getPaquetActif().ajouterCarte(question.toUtf8().constData(), reponse.toUtf8().constData());
             //TODO : ecran modifier carte : this->anchii->setScreen(2);
         }
     }
