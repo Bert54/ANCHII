@@ -1,10 +1,13 @@
+/** Cette classe est le modèle de l'application. Elle contient en cons"quent toutes les données utiles.
+ **/
+
+
 #include "anchii.hpp"
 #include "ui_anchii.h"
 #include "ecranmenupaquet.hpp"
 
 #include <ui_mainscreen.h>
 #include <ui_deckscreen.h>
-#include <QTextStream>
 #include <QString>
 #include <QLabel>
 #include <QFrame>
@@ -16,31 +19,36 @@
  */
 Anchii::Anchii(QWidget *parent) : QMainWindow(parent), ui(new Ui::Anchii) {
     ui->setupUi(this);
+    // Ces 2 boutons sont des boutons qui seront constamment présents dans leur écrans respectifs
     QPushButton* newDeckButton = new QPushButton();
     QPushButton* buttonReturn1 = new QPushButton();
-    this->deckScreen = new DeckScreen();
-    this->mainScreen = new MainScreen();
-    this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton);
-    this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, buttonReturn1);
-    this->ecranMenuPaquetVue = new EcranMenuPaquet(this, this->ecranPaquetsListener);
-    this->mainScreen->ui->gridLayoutControls->addWidget(newDeckButton, 0, 0);
-    this->deckScreen->ui->gridLayoutControls->addWidget(buttonReturn1, 0, 0);
-    this->screens = new QStackedWidget(this);
-    this->screens->addWidget(this->mainScreen);
-    this->screens->addWidget(this->deckScreen);
+    this->deckScreen = new DeckScreen(); // L'écran de gestion de deck
+    this->mainScreen = new MainScreen(); // L'écran des decks
+    this->cardScreen = new CardScreen();
+    this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton); // Listener de l'écran des paquets
+    this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, buttonReturn1); // Listener de l'écran de gestion de paquet
+    this->ecranAjoutCarteListener = new EcranAjoutCarteControles(this);
+    this->ecranMenuPaquetVue = new EcranMenuPaquet(this, this->ecranPaquetsListener); // La vue de l'écran des paquets
+    this->screens = new QStackedWidget(this); // Ce QStackedWidget va servir à la gestion multi-écran de l'application
+    this->screens->addWidget(this->mainScreen); // Ajout de l'écran principal
+    this->screens->addWidget(this->deckScreen); // Ajout de l'écran des paquets
+    this->screens->addWidget(this->cardScreen);
     setCentralWidget(this->screens);
     this->setScreen(0);
 }
 
 /**
- * @brief Anchii::~Anchii Destructeur de l'aaplication
+ * @brief Anchii::~Anchii Destructeur de l'application
  */
 Anchii::~Anchii()
 {
+    delete ecranPaquetsListener;
+    delete ecranGestionPaquetListener;
+    delete ecranAjoutCarteListener;
     delete ui;
     delete deckScreen;
-    //delete ecranMenuPaquetVue;
-    delete ecranPaquetsListener;
+    delete mainScreen;
+    delete screens;
 }
 
 /**
@@ -55,6 +63,11 @@ void Anchii::ajouterPaquet(std::string nom) {
     this->updateObservers();
 }
 
+void Anchii::ajouterCarte(std::string question, std::string reponse) {
+    this->getPaquetActif().ajouterCarte(question, reponse);
+    this->updateObservers();
+}
+
 /**
  * @brief Anchii::setPaquetActif Change le paquet actif de l'application
  * @param nomPaquet Le nom du paquet qui doit être actif
@@ -64,11 +77,23 @@ void Anchii::setPaquetActif(std::string nomPaquet) {
 }
 
 /**
- * @brief Anchii::getPaquetActif Récupère le paquet actif de l'application
+ * @brief Anchii::getNomPaquetActif Récupère le paquet actif de l'application
  * @return Le nom du paquet actif
  */
-std::string Anchii::getPaquetActif() {
+std::string Anchii::getNomPaquetActif() {
     return this->nomPaquetActif;
+}
+
+Paquet Anchii::getPaquetActif() {
+    bool found = false;
+    Paquet *pac;
+    for (Paquet p: this->paquets) {
+        if (!found && getNomPaquetActif().compare(p.getNomPaquet()) == 0) {
+            pac = &p;
+            found = true;
+        }
+    }
+    return *pac;
 }
 
 /**
@@ -99,6 +124,11 @@ std::string Anchii::verifNomPaquet(std::string nom) {
 Ui::DeckScreen* Anchii::getMenuDecksUi() {
     return this->deckScreen->ui;
 }
+
+Ui::CardScreen* Anchii::getMenuAddCardUi() {
+    return this->cardScreen->ui;
+}
+
 /**
  * @brief Anchii::getMainScreenUi Retourne l'inferface graphique du menu des paquets
  * @return

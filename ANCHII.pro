@@ -30,10 +30,14 @@ SOURCES += \
         paquet.cpp \
         ecranpaquetscontroles.cpp \
     observable.cpp \
-    ecranMenuPaquet.cpp \
+    ecranmenupaquet.cpp \
     deckscreen.cpp \
     mainscreen.cpp \
-    ecrangestionpaquetcontroles.cpp
+    ecrangestionpaquetcontroles.cpp \
+    cardscreen.cpp \
+    ecranajoutcartecontroles.cpp \
+    carte.cpp \
+    vueecranmenupaquet.cpp
 
 HEADERS += \
         anchii.hpp \
@@ -41,16 +45,21 @@ HEADERS += \
         ecranpaquetscontroles.hpp \
     observer.hpp \
     observable.hpp \
-    ecranMenuPaquet.hpp \
+    ecranmenupaquet.hpp \
     ../screenDecks.hpp \
     deckscreen.hpp \
     mainscreen.hpp \
-    ecrangestionpaquetcontroles.hpp
+    ecrangestionpaquetcontroles.hpp \
+    cardscreen.hpp \
+    ecranajoutcartecontroles.hpp \
+    carte.hpp \
+    vueecranmenupaquet.hpp
 
 FORMS += \
-        anchii.ui \
+    anchii.ui \
+    mainscreen.ui \
     deckscreen.ui \
-    mainscreen.ui
+    cardscreen.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

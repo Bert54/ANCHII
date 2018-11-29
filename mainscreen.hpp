@@ -16,6 +16,9 @@ public:
     explicit MainScreen(QWidget *parent = 0);
     ~MainScreen();
 
+    /**
+     * @brief ui L'écran des paquets
+     */
     Ui::MainScreen *ui;
 };
 

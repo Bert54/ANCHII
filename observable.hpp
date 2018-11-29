@@ -9,11 +9,15 @@
 class Observable {
 public:
 
+    virtual ~Observable();
     void addObserver(Observer *obs);
     void updateObservers();
 
 protected:
 
+    /**
+     * @brief observers La liste des observeurs du modèle de l'application concerné
+     */
     std::vector<Observer*> observers;
 
 };
