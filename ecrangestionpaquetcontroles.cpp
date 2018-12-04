@@ -17,17 +17,21 @@
 EcranGestionPaquetControles::EcranGestionPaquetControles(Anchii *anchii, QPushButton *buttonReturn) {
     QPushButton* buttonAddCard = new QPushButton();
     QPushButton* buttonDeleteDeck = new QPushButton();
+    QPushButton* buttonExporter = new QPushButton();
     this->anchii = anchii;
     this->buttonReturn = buttonReturn;
     // Ajoute le bouton de retour au menu des paquets au layout de l'écran associé à ce controleur
     this->anchii->getMenuDecksUi()->gridLayoutControls->addWidget(buttonReturn, 0, 0);
     this->anchii->getMenuDecksUi()->gridLayoutControls->addWidget(buttonAddCard, 0, 1);
+    this->anchii->getMenuDecksUi()->gridLayoutControls->addWidget(buttonExporter, 0, 2);
     // Configuration du bouton
     this->buttonReturn->setText("Retour");
+    buttonAddCard->setText("Ajouter Nouvelle Carte");
+    buttonExporter->setText("Exporter");
     // Création du lien afin que le bouton nous fasse retourne au menu des paquets
     connect(this->buttonReturn, &QPushButton::clicked, this, &EcranGestionPaquetControles::returnToMainScreen);
-    buttonAddCard->setText("Ajouter Nouvelle Carte");
     connect(buttonAddCard, &QPushButton::clicked, this, &EcranGestionPaquetControles::setAddCardMode);
+    connect(buttonExporter, &QPushButton::clicked, this, &EcranGestionPaquetControles::sauvegarder);
     // Création du bouton de suppression du paquet
     buttonDeleteDeck = new QPushButton();
     this->anchii->getMenuDecksUi()->gridLayoutControls->addWidget(buttonDeleteDeck, 1, 1);
@@ -37,6 +41,10 @@ EcranGestionPaquetControles::EcranGestionPaquetControles(Anchii *anchii, QPushBu
 
 void EcranGestionPaquetControles::setAddCardMode() {
     this->anchii->setScreen(2);
+}
+
+void EcranGestionPaquetControles::sauvegarder() {
+    this->anchii->sauvegarder(this->anchii->getPaquetActif());
 }
 
 /**

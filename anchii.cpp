@@ -12,6 +12,8 @@
 #include <QLabel>
 #include <QFrame>
 #include <QPushButton>
+#include <fstream>
+#include <QDebug>
 
 /**
  * @brief Anchii::Anchii Constructeur du modèle ainsi que de l'IG
@@ -21,11 +23,12 @@ Anchii::Anchii(QWidget *parent) : QMainWindow(parent), ui(new Ui::Anchii) {
     ui->setupUi(this);
     // Ces 2 boutons sont des boutons qui seront constamment présents dans leur écrans respectifs
     QPushButton* newDeckButton = new QPushButton();
+    QPushButton* importButton = new QPushButton();
     QPushButton* buttonReturn1 = new QPushButton();
     this->deckScreen = new DeckScreen(); // L'écran de gestion de deck
     this->mainScreen = new MainScreen(); // L'écran des decks
     this->cardScreen = new CardScreen();
-    this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton); // Listener de l'écran des paquets
+    this->ecranPaquetsListener = new EcranPaquetsControles(this, newDeckButton/*, impotButton*/); // Listener de l'écran des paquets
     this->ecranGestionPaquetListener = new EcranGestionPaquetControles(this, buttonReturn1); // Listener de l'écran de gestion de paquet
     this->ecranAjoutCarteListener = new EcranAjoutCarteControles(this);
     VueEcranMenuPaquet *vemp = new VueEcranMenuPaquet(this, this->ecranGestionPaquetListener);
@@ -176,4 +179,54 @@ Ui::MainScreen* Anchii::getMainScreenUi() {
  */
 void Anchii::setScreen(int s) {
     this->screens->setCurrentIndex(s);
+}
+
+/**
+ * @brief Anchii::sauvegarder Sauvegarde un paquet sous forme de fichier texte
+ * @param s La valeur déterminant quel paquet doit être sauvegardé
+ */
+void Anchii::sauvegarder(Paquet *paquet){
+    std::string nom = paquet->getNomPaquet()+".anchii";
+    std::ofstream fichier(nom, std::ios_base::out);
+    for(Carte * carte : paquet->getCartes()){
+        std::string question = carte->getQuestion();
+        std::string reponse = carte->getReponse();
+        fichier << question << qrSeparator << reponse << cardSeparator;
+    }
+    fichier.close();
+}
+
+/**
+ * @brief Anchii::charger Importe un paquet depuis un fichier texte
+ * @param s La valeur déterminant le chemin du paquet à charger
+ */
+void Anchii::importer(std::string path){ //TODO : get ALL the file and not just one line
+
+    std::string nomPaquet = path.substr(path.find_last_of("/\\") + 1);
+    std::string::size_type p(nomPaquet.find_last_of('.'));
+    std::string::size_type q;
+    nomPaquet = nomPaquet.substr(0, p);
+    this->ajouterPaquet(nomPaquet);
+
+    std::ifstream fichier;
+    fichier.open(path, std::ios_base::in);
+    std::string content;
+    fichier >> content;
+    fichier.close();
+
+    std::string question;
+    std::string reponse;
+
+    qDebug() << QString::fromStdString(content);
+
+    while(p = content.find_first_of(cardSeparator)!= -1){
+        if(q = content.find_first_of(qrSeparator) != -1){
+            question = content.substr(0, q-1);
+            reponse = content.substr(q+1, p-1);
+            content = content.substr(0, p+1);
+            this->ajouterCarte(question, reponse);
+        }else{
+            break; //TODO : handle error for when format is wrong and for when don't exit
+        }
+    }
 }

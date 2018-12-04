@@ -12,11 +12,12 @@ class Anchii;
 class EcranPaquetsControles : public QObject{
     Q_OBJECT
 public:
-    explicit EcranPaquetsControles(Anchii *anchii, QPushButton *buttonNewDec);
+    explicit EcranPaquetsControles(Anchii *anchii, QPushButton *buttonNewDeck);
     virtual ~EcranPaquetsControles() {}
     void ajouterPaquet();
 public slots :
     void setScreenManageDeck(QString str);
+    void importer();
 
 private:
     /**
@@ -24,7 +25,7 @@ private:
      */
     Anchii *anchii;
     /**
-     * @brief buttonNewDeck Le bouton de création d"un nouveau paquet
+     * @brief buttonNewDeck Le bouton de création d'un nouveau paquet
      */
     QPushButton *buttonNewDeck;
 };

@@ -19,12 +19,16 @@
 EcranPaquetsControles::EcranPaquetsControles(Anchii* anchii, QPushButton *buttonNewDeck) {
     this->anchii = anchii;
     this->buttonNewDeck = buttonNewDeck;
+    QPushButton* buttonImport = new QPushButton();
     // Ajoute le bouton de création d'un paquet au layout de l'écran associé à ce controleur
     this->anchii->getMainScreenUi()->gridLayoutControls->addWidget(buttonNewDeck, 0, 0);
+    this->anchii->getMainScreenUi()->gridLayoutControls->addWidget(buttonImport, 0, 1);
     // Configuration du bouton
     this->buttonNewDeck->setText("Nouveau");
+    buttonImport->setText("Importer");
     // Création du lien afin que le bouton crée un nouveau paquet
     connect(this->buttonNewDeck, &QPushButton::clicked, this, &EcranPaquetsControles::ajouterPaquet);
+    connect(buttonImport, &QPushButton::clicked, this, &EcranPaquetsControles::importer);
 }
 
 /**
@@ -50,4 +54,17 @@ void EcranPaquetsControles::setScreenManageDeck(QString str) {
     this->anchii->setPaquetActif(str.toUtf8().constData());
     this->anchii->setScreen(1);
     this->anchii->updateObservers(2);
+}
+
+void EcranPaquetsControles::importer(){
+    bool isOkPressed; // Sert à déterminer si l'utilisateur a appuyé sur le bouton 'ok' ou sur le bouton 'annuler' de la fenêtre de dialogue
+    QString text;
+    // Ici, la boucle oblige à l'utilisateur de saisir un texte non vide dans une fenêtre de saisie si il n'appuie pas sur le bouton 'annuler'.
+    do {
+        text = QInputDialog::getText(0, tr("Importer Paquet"), tr("Entrez le chemin du paquet :"), QLineEdit::Normal, "", &isOkPressed);
+    } while (strcmp(text.toUtf8().constData(), "") == 0 && isOkPressed);
+    if (isOkPressed) {
+        this->anchii->importer(text.toUtf8().constData());
+        this->anchii->setScreen(1);
+    }
 }

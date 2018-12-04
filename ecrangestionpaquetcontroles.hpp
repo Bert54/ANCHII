@@ -17,6 +17,7 @@ public:
     void setAddCardMode();
     void returnToMainScreen();
     void supprimerPaquet();
+    void sauvegarder();
 
 private:
     /**

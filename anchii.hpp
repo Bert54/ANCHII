@@ -19,6 +19,9 @@ namespace Ui {
 class Anchii;
 }
 
+static const std::string qrSeparator = "\\";
+static const std::string cardSeparator = "\n";
+
 class EcranMenuPaquet;
 
 /**
@@ -41,6 +44,8 @@ public:
     Ui::DeckScreen* getMenuDecksUi();
     Ui::MainScreen* getMainScreenUi();
     Ui::CardScreen* getMenuAddCardUi();
+    void sauvegarder(Paquet *p);
+    void importer(std::string s);
     void setScreen(int s);
     void supprimerPaquet();
 
