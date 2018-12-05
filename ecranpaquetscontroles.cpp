@@ -56,6 +56,10 @@ void EcranPaquetsControles::setScreenManageDeck(QString str) {
     this->anchii->updateObservers(2);
 }
 
+
+/**
+ * @brief EcranPaquetsControles::importer Demande au modèle d'importer un paquet
+ */
 void EcranPaquetsControles::importer(){
     bool isOkPressed; // Sert à déterminer si l'utilisateur a appuyé sur le bouton 'ok' ou sur le bouton 'annuler' de la fenêtre de dialogue
     QString text;

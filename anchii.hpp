@@ -19,8 +19,8 @@ namespace Ui {
 class Anchii;
 }
 
-static const std::string qrSeparator = "\\";
-static const std::string cardSeparator = "\n";
+static const std::string qrSeparator = "_~~_";
+static const std::string cardSeparator = "__##__";
 
 class EcranMenuPaquet;
 

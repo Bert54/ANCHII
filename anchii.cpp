@@ -197,36 +197,42 @@ void Anchii::sauvegarder(Paquet *paquet){
 }
 
 /**
- * @brief Anchii::charger Importe un paquet depuis un fichier texte
+ * @brief Anchii::charger Importe un paquet depuis un fichier texte, si aucun paquet, en crée un nouveau
  * @param s La valeur déterminant le chemin du paquet à charger
  */
 void Anchii::importer(std::string path){ //TODO : get ALL the file and not just one line
 
+    //Trouve le fichier et récupére le nom du paquet
     std::string nomPaquet = path.substr(path.find_last_of("/\\") + 1);
     std::string::size_type p(nomPaquet.find_last_of('.'));
     std::string::size_type q;
     nomPaquet = nomPaquet.substr(0, p);
     this->ajouterPaquet(nomPaquet);
+    //Si pas d'extension quand même chercher un .anchii
+    if(p==-1){path = path + ".anchii";}
 
+    //Lire le fichier
     std::ifstream fichier;
     fichier.open(path, std::ios_base::in);
     std::string content;
-    fichier >> content;
+    std::string temp;
+    while(fichier >> temp){content = content + "\n" + temp;}
     fichier.close();
 
+    //Enlever le premier retour à la ligne si content n'estp as vide
+    if(content != ""){content = content.substr(1, content.size());}
+
+    //Recuperation des données
     std::string question;
     std::string reponse;
-
-    qDebug() << QString::fromStdString(content);
-
-    while(p = content.find_first_of(cardSeparator)!= -1){
-        if(q = content.find_first_of(qrSeparator) != -1){
-            question = content.substr(0, q-1);
-            reponse = content.substr(q+1, p-1);
-            content = content.substr(0, p+1);
+    while((p = content.find(cardSeparator)) != -1){
+        if((q = content.find(qrSeparator)) != -1){
+            question = content.substr(0, q);
+            reponse = content.substr(q+qrSeparator.size(), p-(q+qrSeparator.size()));
+            content = content.substr(p+cardSeparator.size(), content.size());
             this->ajouterCarte(question, reponse);
         }else{
-            break; //TODO : handle error for when format is wrong and for when don't exit
+            break;
         }
     }
 }

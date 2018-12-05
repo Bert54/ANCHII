@@ -43,6 +43,9 @@ void EcranGestionPaquetControles::setAddCardMode() {
     this->anchii->setScreen(2);
 }
 
+/**
+ * @brief EcranGestionPaquetControles::sauvegarder Demande au modèle de sauvegarder le paquet actif sous forme de .anchii
+ */
 void EcranGestionPaquetControles::sauvegarder() {
     this->anchii->sauvegarder(this->anchii->getPaquetActif());
 }
