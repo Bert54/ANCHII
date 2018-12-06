@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DeckScreen</class>
+ <widget class="QMainWindow" name="DeckScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+<<<<<<< HEAD
+      <y>309</y>
+      <width>661</width>
+      <height>231</height>
+=======
+      <y>389</y>
+      <width>661</width>
+      <height>151</height>
+>>>>>>> 5a62d3379db2b4bc1a593fb1b231f3bddbf6b20e
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayoutControls"/>
+   </widget>
+<<<<<<< HEAD
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>661</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayoutCards"/>
+   </widget>
+=======
+>>>>>>> 5a62d3379db2b4bc1a593fb1b231f3bddbf6b20e
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
