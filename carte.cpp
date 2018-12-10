@@ -31,6 +31,14 @@ Carte::Carte(std::string question, std::string reponse, std::string* mediaQuesti
 }
 
 /**
+ * @brief Carte::~Carte Destructeur de la carte. On détruit les deux médias
+ */
+Carte::~Carte() {
+    delete mediaQuestion;
+    delete mediaReponse;
+}
+
+/**
  * @brief Carte::convertFileToLocal Permet de récupérer un fichier, de le copier dans un répertoire local (si celui-ci n'existe pas, on le crée) et de mettre à jour le chemin du média afin que celui-ci pointe sur le fichier copié
  * @param path Le chemin du fichier à copier
  * @return Le chemin vers le fichier local

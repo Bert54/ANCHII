@@ -11,6 +11,9 @@ Paquet::Paquet(std::string nom) {
     this->nom = nom;
 }
 
+/**
+ * @brief Paquet::~Paquet Destructeur d'un paquet. ON détruit toutes les cartes, une par une.
+ */
 Paquet::~Paquet() {
     for (Carte *c: this->cartes) {
         delete c;

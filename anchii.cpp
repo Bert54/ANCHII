@@ -39,7 +39,7 @@ Anchii::Anchii(QWidget *parent) : QMainWindow(parent), ui(new Ui::Anchii) {
 }
 
 /**
- * @brief Anchii::~Anchii Destructeur de l'application
+ * @brief Anchii::~Anchii Destructeur de l'application On y détruit les listeners, les vues, les ui et leur conteneur et enfin, le modèle lui-même.
  */
 Anchii::~Anchii()
 {

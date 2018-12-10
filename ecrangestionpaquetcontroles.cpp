@@ -35,6 +35,9 @@ EcranGestionPaquetControles::EcranGestionPaquetControles(Anchii *anchii, QPushBu
     connect(buttonDeleteDeck, &QPushButton::clicked, this, &EcranGestionPaquetControles::supprimerPaquet);
 }
 
+/**
+ * @brief EcranGestionPaquetControles::setAddCardMode Change l'application en mode ajout de carte en demandant au modèle d'afficher l'écran d'ajout de carte
+ */
 void EcranGestionPaquetControles::setAddCardMode() {
     this->anchii->setScreen(2);
 }

@@ -10,6 +10,7 @@ class Carte {
 
 public:
     Carte(std::string question, std::string reponse, std::string* mediaQuestion, std::string* mediaReponse);
+    virtual ~Carte();
     std::string getQuestion();
     std::string getReponse();
     MediaImage* getMediaQuestion();

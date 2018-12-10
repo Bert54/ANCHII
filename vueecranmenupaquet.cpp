@@ -51,8 +51,10 @@ void VueEcranMenuPaquet::update(int code) {
                 img = new QPixmap(QString::fromStdString(c->getMediaQuestion()->getMedia()));
                 button->setIcon(QIcon(*img));
                 button->setIconSize(QSize(50, 50));
+                delete img; // On oublie pas de supprimer l'image instancié (celle-ci a été copiée dans de le bouton avant)
             }
             button->setStyleSheet("border: 1px solid blue; padding-top: 20px; padding-bottom: 20px;");
+            //Ajout du bouton de la carte au layout de la vue de l'écran de gestion de paquet
             anchii->getMenuDecksUi()->gridLayoutCards->addWidget(button, Yaxis, Xaxis);
             Xaxis++;
             if (Xaxis >= 6) {

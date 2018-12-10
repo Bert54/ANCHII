@@ -37,7 +37,7 @@ void EcranPaquetsControles::ajouterPaquet() {
     do {
         text = QInputDialog::getText(0, tr("Nouveau Paquet"), tr("Entrez le nom du nouveau paquet :"), QLineEdit::Normal, "", &isOkPressed);
     } while (strcmp(text.toUtf8().constData(), "") == 0 && isOkPressed);
-    if (isOkPressed) {
+    if (isOkPressed) { // Si l'utilisateur n'a pas appuyé sur le bouton "annuler", alors on ajoute la paquet
         this->anchii->ajouterPaquet(text.toUtf8().constData());
         this->anchii->setScreen(1);
     }
