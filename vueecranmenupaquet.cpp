@@ -41,6 +41,10 @@ void VueEcranMenuPaquet::update(int code) {
         for (Carte *c : this->anchii->getPaquetActif()->getCartes()) {
             button = new QPushButton(QString::fromStdString(c->getQuestion()));
             button->setStyleSheet("border: 1px solid blue; padding-top: 20px; padding-bottom: 20px;");
+            // On relie d'abord tous les boutons au mapper
+            button->connect(button, SIGNAL(clicked()), &mapper, SLOT(map()));
+            // L'argument qui sera envoyé quand on appuiera sur le bouton
+            mapper.setMapping(button, button->text());
             anchii->getMenuDecksUi()->gridLayoutCards->addWidget(button, Yaxis, Xaxis);
             Xaxis++;
             if (Xaxis >= 6) {
@@ -48,5 +52,7 @@ void VueEcranMenuPaquet::update(int code) {
                 Xaxis = 0;
             }
         }
+        // On connecte le mapper au bon slot
+        button->connect(&mapper, SIGNAL(mapped(QString)), this->ecranGestionPaquetsListener, SLOT(ajouterCarteASupprimer(QString)));
     }
 }

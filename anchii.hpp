@@ -33,6 +33,8 @@ public:
     ~Anchii();
     void ajouterPaquet(std::string nom);
     void ajouterCarte(std::string question, std::string reponse);
+    void ajouterCarteASupprimer(std::string question);
+    void supprimerCartes();
     std::string getNomPaquetActif();
     Paquet* getPaquetActif();
     std::string verifNomPaquet(std::string nom);
@@ -57,6 +59,7 @@ private:
      * @brief paquets La liste des paquets
      */
     std::vector<Paquet*> paquets;
+
 
     /**
      * @brief screens Container servant à switcher l'écran actif

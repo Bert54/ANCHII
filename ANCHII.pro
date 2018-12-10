@@ -46,7 +46,6 @@ HEADERS += \
     observer.hpp \
     observable.hpp \
     ecranmenupaquet.hpp \
-    ../screenDecks.hpp \
     deckscreen.hpp \
     mainscreen.hpp \
     ecrangestionpaquetcontroles.hpp \

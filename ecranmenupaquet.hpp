@@ -8,6 +8,7 @@
 #include "anchii.hpp"
 #include "ecranpaquetscontroles.hpp"
 
+
 class EcranMenuPaquet : public Observer {
 public :
     explicit EcranMenuPaquet(Anchii *anchii, EcranPaquetsControles* ecranPaquetsListener);
