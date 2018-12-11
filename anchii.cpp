@@ -98,6 +98,24 @@ void Anchii::ajouterCarte(std::string question, std::string reponse, std::string
 }
 
 /**
+ * @brief Anchii::ajouterCarteASupprimer Ajoute la carte selectionnee a la liste de cartes a supprimer
+ * @param question La question de la carte a supprimer
+ */
+void Anchii::ajouterCarteASupprimer(std::string question) {
+    this->getPaquetActif()->ajouterCarteASupprimer(question);
+    this->updateObservers(2);
+
+}
+
+/**
+ * @brief Anchii::supprimerCartes Supprime les cartes sélectionnees du paquet actif
+ */
+void Anchii::supprimerCartes() {
+    this->getPaquetActif()->supprimerCartes();
+    this->updateObservers(2);
+}
+
+/**
  * @brief Anchii::setPaquetActif Change le paquet actif de l'application
  * @param nomPaquet Le nom du paquet qui doit être actif
  */

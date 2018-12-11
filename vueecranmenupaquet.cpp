@@ -53,7 +53,16 @@ void VueEcranMenuPaquet::update(int code) {
                 button->setIconSize(QSize(50, 50));
                 delete img; // On oublie pas de supprimer l'image instancié (celle-ci a été copiée dans de le bouton avant)
             }
-            button->setStyleSheet("border: 1px solid blue; padding-top: 20px; padding-bottom: 20px;");
+            if(c->getSuppression()) {
+                button->setStyleSheet("border: 1px solid green; padding-top: 20px; padding-bottom: 20px;");
+            }
+            else {
+                button->setStyleSheet("border: 1px solid blue; padding-top: 20px; padding-bottom: 20px;");
+            }
+            // On relie d'abord tous les boutons au mapper
+            button->connect(button, SIGNAL(clicked()), &mapper, SLOT(map()));
+            // L'argument qui sera envoyé quand on appuiera sur le bouton
+            mapper.setMapping(button, button->text());
             //Ajout du bouton de la carte au layout de la vue de l'écran de gestion de paquet
             anchii->getMenuDecksUi()->gridLayoutCards->addWidget(button, Yaxis, Xaxis);
             Xaxis++;
@@ -62,5 +71,7 @@ void VueEcranMenuPaquet::update(int code) {
                 Xaxis = 0;
             }
         }
+        // On connecte le mapper au bon slot
+        button->connect(&mapper, SIGNAL(mapped(QString)), this->ecranGestionPaquetsListener, SLOT(ajouterCarteASupprimer(QString)));
     }
 }

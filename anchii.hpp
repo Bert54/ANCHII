@@ -33,6 +33,8 @@ public:
     ~Anchii();
     void ajouterPaquet(std::string nom);
     void ajouterCarte(std::string question, std::string reponse, std::string* mediaQuestion, std::string* mediaReponse);
+    void ajouterCarteASupprimer(std::string question);
+    void supprimerCartes();
     std::string getNomPaquetActif();
     Paquet* getPaquetActif();
     std::string verifNomPaquet(std::string nom);

@@ -15,8 +15,11 @@ public:
     explicit EcranGestionPaquetControles(Anchii *anchii, QPushButton *buttonReturn);
     virtual ~EcranGestionPaquetControles() {}
     void setAddCardMode();
+    void supprimerCartes();
     void returnToMainScreen();
     void supprimerPaquet();
+public slots :
+    void ajouterCarteASupprimer(QString question);
 
 private:
     /**
@@ -25,6 +28,7 @@ private:
     Anchii *anchii;
     QPushButton *buttonReturn;
     QPushButton *buttonDeleteDeck;
+    bool supprCartes;
 };
 
 #endif // ECRANGESTIONPAQUETCONTROLES_HPP

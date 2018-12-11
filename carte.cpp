@@ -89,3 +89,25 @@ MediaImage* Carte::getMediaQuestion() {
 MediaImage* Carte::getMediaReponse() {
     return this->mediaReponse;
 }
+
+/**
+ * @brief Carte::ajouterASupprimer Change le statut de la carte par rapport a sa suppression
+ */
+void Carte::ajouterASupprimer() {
+    if(this->aSupprimer) {     // On change le statut de suppression de la carte
+        this->aSupprimer = false;
+    }
+    else {
+        this->aSupprimer = true;
+    }
+}
+
+/**
+ * @brief Carte::getSuppression Retourne le statut de la suppression de la carte
+ * @return true si la carte va etre supprimer, false sinon
+ */
+bool Carte::getSuppression() {
+    return this->aSupprimer;
+}
+
+

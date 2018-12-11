@@ -5,6 +5,8 @@
 #include "anchii.hpp"
 #include "ecrangestionpaquetcontroles.hpp"
 
+#include <QSignalMapper>
+
 class VueEcranMenuPaquet : public Observer {
 public:
     explicit VueEcranMenuPaquet(Anchii *anchii, EcranGestionPaquetControles* ecranGestionPaquetListener);
@@ -19,6 +21,10 @@ private:
      * @brief ecranGestionPaquetsListener Le listener de cette vue
      */
     EcranGestionPaquetControles *ecranGestionPaquetsListener;
+    /**
+     * @brief mapper Permet au controleur d'appeler une méthode avec un paramètre
+     */
+    QSignalMapper mapper;
 };
 
 #endif // VUEECRANMENUPAQUET_HPP

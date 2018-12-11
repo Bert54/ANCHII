@@ -16,12 +16,15 @@ public:
     MediaImage* getMediaQuestion();
     MediaImage* getMediaReponse();
     std::string convertFileToLocal(std::string path);
+    bool getSuppression();
+    void ajouterASupprimer();
 
 private:
     std::string question;
     std::string reponse;
     MediaImage *mediaQuestion;
     MediaImage *mediaReponse;
+    bool aSupprimer;
 };
 
 #endif // CARTE_HPP
