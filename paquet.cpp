@@ -3,7 +3,7 @@
 
 #include "paquet.hpp"
 
-#include "QDebug"
+#include <QDebug>
 
 /**
  * @brief Paquet::Paquet Constructeur d'un paquet

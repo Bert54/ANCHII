@@ -106,6 +106,7 @@ void Anchii::ajouterCarte(std::string question, std::string reponse) {
  */
 void Anchii::ajouterCarteASupprimer(std::string question) {
     this->getPaquetActif()->ajouterCarteASupprimer(question);
+    this->updateObservers(2);
 
 }
 

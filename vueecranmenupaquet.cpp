@@ -40,7 +40,12 @@ void VueEcranMenuPaquet::update(int code) {
         // Pour le moment, ces boutons ne font rien.
         for (Carte *c : this->anchii->getPaquetActif()->getCartes()) {
             button = new QPushButton(QString::fromStdString(c->getQuestion()));
-            button->setStyleSheet("border: 1px solid blue; padding-top: 20px; padding-bottom: 20px;");
+            if(c->getSuppression()) {
+                button->setStyleSheet("border: 1px solid green; padding-top: 20px; padding-bottom: 20px;");
+            }
+            else {
+                button->setStyleSheet("border: 1px solid blue; padding-top: 20px; padding-bottom: 20px;");
+            }
             // On relie d'abord tous les boutons au mapper
             button->connect(button, SIGNAL(clicked()), &mapper, SLOT(map()));
             // L'argument qui sera envoyé quand on appuiera sur le bouton
