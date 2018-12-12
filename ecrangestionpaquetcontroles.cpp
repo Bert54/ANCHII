@@ -8,6 +8,7 @@
 #include <ui_anchii.h>
 #include <ui_deckscreen.h>
 #include <ui_mainscreen.h>
+#include <QMessageBox>
 
 /**
  * @brief EcranGestionPaquetControles::EcranGestionPaquetControles Constructeur du contrôleur de l'interface graphique DeckScreen
@@ -16,6 +17,7 @@
  */
 EcranGestionPaquetControles::EcranGestionPaquetControles(Anchii *anchii, QPushButton *buttonReturn) {
     QPushButton* buttonAddCard = new QPushButton();
+    QPushButton* buttonSauvegarder = new QPushButton();
     QPushButton* buttonDeleteCards = new QPushButton();
     QPushButton* buttonDeleteDeck = new QPushButton();
     this->anchii = anchii;
@@ -38,6 +40,10 @@ EcranGestionPaquetControles::EcranGestionPaquetControles(Anchii *anchii, QPushBu
     this->anchii->getMenuDecksUi()->gridLayoutControls->addWidget(buttonDeleteDeck, 1, 1);
     buttonDeleteDeck->setText("Supprimer le paquet");
     connect(buttonDeleteDeck, &QPushButton::clicked, this, &EcranGestionPaquetControles::supprimerPaquet);
+    //Sauvegarde du deck
+    this->anchii->getMenuDecksUi()->gridLayoutControls->addWidget(buttonSauvegarder, 1, 2);
+    buttonSauvegarder->setText("Sauvegarder le paquet");
+    connect(buttonSauvegarder, &QPushButton::clicked, this, &EcranGestionPaquetControles::sauvegarderPaquet);
 }
 
 /**
@@ -87,4 +93,13 @@ void EcranGestionPaquetControles::supprimerCartes() {
         this->supprCartes = 0;          // On réinitialise le clic
         this->anchii->supprimerCartes();
     }
+}
+
+/**
+ * @brief EcranGestionPaquetControles::sauvegarderPaquet Sauvegarde un paquet dans un fichier local
+ */
+void EcranGestionPaquetControles::sauvegarderPaquet(){
+    std::string msg = this->anchii->sauvegarderPaquet(this->anchii->getPaquetActif());
+    QMessageBox::information(0, tr("Sauvegarde"), tr(("Paquet sauvegardé en tant que : " + QString::fromStdString(msg)).toStdString().c_str()));
+
 }

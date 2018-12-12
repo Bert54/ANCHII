@@ -18,6 +18,7 @@ public:
     void supprimerCartes();
     void returnToMainScreen();
     void supprimerPaquet();
+    void sauvegarderPaquet();
 public slots :
     void ajouterCarteASupprimer(QString question);
 

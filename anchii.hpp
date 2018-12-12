@@ -19,6 +19,10 @@ namespace Ui {
 class Anchii;
 }
 
+static const std::string qrSeparator = "_~~_";
+static const std::string cardSeparator = "__##__";
+static const std::string mediaSeparator = "__--__";
+
 class EcranMenuPaquet;
 
 /**
@@ -36,6 +40,7 @@ public:
     void ajouterCarteASupprimer(std::string question);
     void supprimerCartes();
     std::string getNomPaquetActif();
+    std::string getNomUtilisateurActif();
     Paquet* getPaquetActif();
     std::string verifNomPaquet(std::string nom);
     void setPaquetActif(std::string nomPaquet);
@@ -45,6 +50,9 @@ public:
     Ui::CardScreen* getMenuAddCardUi();
     void setScreen(int s);
     void supprimerPaquet();
+    std::string sauvegarderPaquet(Paquet *paquet);
+    void toutCharger(std::string userName);
+    void chargerPaquet(std::string path);
 
 private:
     /**

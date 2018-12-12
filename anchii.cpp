@@ -12,6 +12,9 @@
 #include <QLabel>
 #include <QFrame>
 #include <QPushButton>
+#include <QDir>
+#include <fstream>
+#include <QDebug>
 
 /**
  * @brief Anchii::Anchii Constructeur du modèle ainsi que de l'IG
@@ -34,6 +37,7 @@ Anchii::Anchii(QWidget *parent) : QMainWindow(parent), ui(new Ui::Anchii) {
     this->screens->addWidget(this->mainScreen); // Ajout de l'écran principal
     this->screens->addWidget(this->deckScreen); // Ajout de l'écran des paquets
     this->screens->addWidget(this->cardScreen);
+    this->toutCharger(this->getNomUtilisateurActif());
     setCentralWidget(this->screens);
     this->setScreen(0);
 }
@@ -82,6 +86,13 @@ void Anchii::supprimerPaquet() {
         }
     }
     this->setPaquetActif("");
+    std::string pName = this->paquets.at(numPaquet)->getNomPaquet();
+
+    QFile file(QDir::currentPath() + "/" + QString::fromStdString(this->getNomUtilisateurActif()) + "/" + QString::fromStdString(pName) + ".anchii");
+    if(file.exists());
+    {
+        file.remove();
+    }
     this->paquets.erase(this->paquets.begin() + numPaquet); // numPaquet ne peut pas être NULL
     delete paq;
     this->updateObservers(1);
@@ -129,6 +140,15 @@ void Anchii::setPaquetActif(std::string nomPaquet) {
  */
 std::string Anchii::getNomPaquetActif() {
     return this->nomPaquetActif;
+}
+
+/**
+ * @brief Anchii::getNomPaquetActif Récupère le nom de l'utilisateur actif de l'application
+ * Fonction temporaire en attendant qu'un véritable système d'utilisateur soit implémenté
+ * @return Le nom de l'utilisateur actif
+ */
+std::string Anchii::getNomUtilisateurActif(){
+    return "user";
 }
 
 /**
@@ -194,4 +214,113 @@ Ui::MainScreen* Anchii::getMainScreenUi() {
  */
 void Anchii::setScreen(int s) {
     this->screens->setCurrentIndex(s);
+}
+
+/**
+ * @brief Anchii::sauvegarderPaquet Sauvegarde un paquet sous forme de fichier texte
+ * @param s Le paquet à sauvegarder
+ * @return Le chemin et nom du fichier.
+ */
+std::string Anchii::sauvegarderPaquet(Paquet *paquet){
+    // On vérifie si le répertoire qui va contenir les images existe, si il n'existe pas, alors on le crée
+    if (!QDir(QDir::currentPath() + "/" + QString::fromStdString(this->getNomUtilisateurActif())).exists()) {
+        QDir().mkdir(QString::fromStdString(getNomUtilisateurActif()));
+    }
+    std::string nom = paquet->getNomPaquet()+".anchii";
+    std::ofstream fichier(getNomUtilisateurActif() + "/" + nom, std::ios_base::out);
+    for(Carte * carte : paquet->getCartes()){
+        std::string question = carte->getQuestion();
+        std::string mediaQuestion;
+        if (carte->getMediaQuestion() != NULL) {
+            mediaQuestion = carte->getMediaQuestion()->getMedia();
+        }else{
+            mediaQuestion = "";
+        }
+        std::string reponse = carte->getReponse();
+        std::string mediaReponse;
+        if (carte->getMediaReponse() != NULL) {
+            mediaReponse = carte->getMediaQuestion()->getMedia();
+        }else{
+            mediaReponse = "";
+        }
+        fichier << question << mediaSeparator << mediaQuestion << qrSeparator << reponse << mediaSeparator << mediaReponse << cardSeparator;
+    }
+    fichier.close();
+    return getNomUtilisateurActif() + std::string("/") + nom;
+}
+
+/**
+ * @brief Anchii::toutCharger Charge tout les .anchii dans le répertoire de l'utilisateur
+ * @param s Nom du répertoire utilisateur
+ */
+void Anchii::toutCharger(std::string userName){
+    // On vérifie si le répertoire qui va contenir les images existe, si il n'existe pas, alors on le crée
+    if (!QDir(QDir::currentPath() + "/" + QString::fromStdString(userName)).exists()) {
+        QDir().mkdir(QString::fromStdString(userName));
+    }
+    QDir directory(QString::fromStdString(userName));
+    QStringList files = directory.entryList(QStringList() << "*.anchii",QDir::Files);
+    foreach(QString filename, files) {
+        this->chargerPaquet(QDir::currentPath().toUtf8().constData() + std::string("/") + userName + std::string("/") + filename.toUtf8().constData());
+    }
+}
+
+/**
+ * @brief Anchii::chargerPaquet Importe un paquet depuis un fichier .anchii, si aucun paquet, en crée un nouveau
+ * @param s Chemin du paquet à charger
+ */
+void Anchii::chargerPaquet(std::string path){
+
+    //Trouve le fichier et récupére le nom du paquet
+    std::string nomPaquet = path.substr(path.find_last_of("/\\") + 1);
+    std::string::size_type p(nomPaquet.find_last_of('.'));
+    std::string::size_type q;
+    nomPaquet = nomPaquet.substr(0, p);
+    this->ajouterPaquet(nomPaquet);
+    //Si pas d'extension quand même chercher un .anchii
+    if(p==-1){path = path + ".anchii";}
+
+    //Lire le fichier
+    std::ifstream fichier;
+    fichier.open(path, std::ios_base::in);
+    std::string content;
+    std::string temp;
+    while(fichier >> temp){content = content + "\n" + temp;}
+    fichier.close();
+
+    //Enlever le premier retour à la ligne si content n'estp as vide
+    if(content != ""){content = content.substr(1, content.size());}
+
+    //Recuperation des données
+    std::string question;
+    std::string mediaQuestion;
+    std::string reponse;
+    std::string mediaReponse;
+    while((p = content.find(cardSeparator)) != -1){
+        //Question
+        if((q = content.find(mediaSeparator)) != -1){
+            question = content.substr(0, q);
+            content = content.substr(q+mediaSeparator.size(), content.size());
+        }else{break;
+        }
+        //Media Question
+        if((q = content.find(qrSeparator)) != -1){
+            mediaQuestion = content.substr(0, q);
+            content = content.substr(q+qrSeparator.size(), content.size());
+        }else{break;}
+
+        //Reponse
+        if((q = content.find(mediaSeparator)) != -1){
+            reponse = content.substr(0, q);
+            content = content.substr(q+mediaSeparator.size(), content.size());
+        }else{break;}
+
+        //Media Reponse
+        if((q = content.find(cardSeparator)) != -1){
+            mediaReponse = content.substr(0, q);
+            content = content.substr(q+cardSeparator.size(), content.size());
+        }else{break;}
+
+        this->ajouterCarte(question, reponse, &mediaQuestion, &mediaReponse);
+    }
 }
